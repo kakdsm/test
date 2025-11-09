@@ -1,12 +1,15 @@
 FROM php:8.2-apache
 
-# Install MySQL PDO driver (this solves the error)
+# Enable extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Enable Apache rewrite
-RUN a2enmod rewrite
-
-# Copy files to Apache root
+# Copy project files
 COPY . /var/www/html/
 
-EXPOSE 80
+# Set Apache to listen on Railway's port
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+
+# Expose port
+EXPOSE ${PORT}
+
+CMD ["apache2-foreground"]
