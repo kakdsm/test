@@ -1,16 +1,17 @@
 <?php
-// Database credentials from Railway
-$host = "yamabiko.proxy.rlwy.net"; // your hostname
-$dbname = "railway";                         // your database name
-$username = "root";                          // your username
-$password = "HqJKeejCYaNgWAQCQtLjbmhmYuEfQWwD";            // your password
-$port = 55383;                               // your port
+$host = getenv("MYSQLHOST");
+$port = getenv("MYSQLPORT");
+$db   = getenv("MYSQL_DATABASE");
+$user = getenv("MYSQLUSER");
+$pass = getenv("MYSQLPASSWORD");
 
 try {
-    $dsn = "mysql:host=$host;port=$port;dbname=$db";
-    $pdo = new PDO($dsn, $user, $pass);
+    $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
-    echo "✅ Connected to Railway DB!";
+    echo "✅ Connected successfully to Railway database!";
 } catch (PDOException $e) {
     echo "❌ Connection failed: " . $e->getMessage();
 }
