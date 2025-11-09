@@ -7,23 +7,10 @@ $password = "HqJKeejCYaNgWAQCQtLjbmhmYuEfQWwD";            // your password
 $port = 55383;                               // your port
 
 try {
-    // Create a PDO connection
-    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
-    $pdo = new PDO($dsn, $username, $password);
+    $dsn = "mysql:host=$host;port=$port;dbname=$db";
+    $pdo = new PDO($dsn, $user, $pass);
 
-    // Set error mode
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    echo "<h2>✅ Successfully connected to Railway MySQL database!</h2>";
-
-    // Test query
-    $stmt = $pdo->query("SELECT NOW() as server_time;");
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    echo "Server time: " . $row['server_time'];
-
+    echo "✅ Connected to Railway DB!";
 } catch (PDOException $e) {
-    echo "<h2>❌ Connection failed:</h2>";
-    echo $e->getMessage();
+    echo "❌ Connection failed: " . $e->getMessage();
 }
-?>
